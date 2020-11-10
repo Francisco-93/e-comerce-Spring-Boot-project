@@ -14,7 +14,7 @@ import com.franciscoaguiar.cursomc.domain.Categoria;
 import com.franciscoaguiar.cursomc.services.CategoriaService;
 
 @RestController
-@RequestMapping
+@RequestMapping(value = "/categorias")
 public class CategoriaResource implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -22,14 +22,15 @@ public class CategoriaResource implements Serializable{
 	@Autowired
 	private CategoriaService categoriaService;
 	
-	@GetMapping (value = "/categorias")
+	@GetMapping
 	public ResponseEntity<List<Categoria>> findAll(){
 		return ResponseEntity.ok().body(categoriaService.findAll());
 	}
 	
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<Categoria> findById(@PathVariable Integer id){
-		return ResponseEntity.ok().body(categoriaService.findById(id));
+		Categoria obj = categoriaService.findById(id);
+		return ResponseEntity.ok().body(obj);
 	}
 	
 }
