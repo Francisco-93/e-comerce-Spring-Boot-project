@@ -28,7 +28,7 @@ public class CategoriaResource implements Serializable{
 		return ResponseEntity.ok().body(categoriaService.findAll());
 	}
 	
-	@RequestMapping(value = "{/id}", method = RequestMethod.GET)
+	@GetMapping(value = "/{id}")
 	public ResponseEntity<Categoria> findById(@PathVariable Integer id){
 		Categoria obj = categoriaService.findById(id);
 		return ResponseEntity.ok().body(obj);

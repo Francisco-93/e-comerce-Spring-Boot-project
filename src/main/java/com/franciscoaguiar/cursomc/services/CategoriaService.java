@@ -23,17 +23,17 @@ public class CategoriaService implements Serializable{
 		return categoriaRepository.findAll();
 	}
 	
-	/*public Categoria findById(Integer id){
+	public Categoria findById(Integer id){
 		Optional<Categoria> obj = categoriaRepository.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! Id: " + id + ", Tipo: " + Categoria.class.getName()));
-	}*/
+	}
 	
-	public Categoria findById(Integer id){
+	/*public Categoria findById(Integer id){
 		Optional<Categoria> obj = categoriaRepository.findById(id);
 		if(obj == null) {
 			throw new ObjectNotFoundException("Objeto não encontrado! Id: " + id + ", Tipo: " + Categoria.class.getName());
 		}
 		return obj.get();
-	}
+	}*/
 
 }
