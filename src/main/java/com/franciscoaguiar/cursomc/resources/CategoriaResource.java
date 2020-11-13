@@ -5,6 +5,8 @@ import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -46,9 +48,9 @@ public class CategoriaResource implements Serializable{
 	}
 	
 	@PostMapping
-	public ResponseEntity<Void> insert(@RequestBody Categoria obj){
+	public ResponseEntity<Void> insert(@Valid @RequestBody CategoriaDTO objDTO){
+		Categoria obj = categoriaService.fromDTO(objDTO);
 		obj = categoriaService.insert(obj);
-		
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().
 				path("/{id}").buildAndExpand(obj.getId()).toUri();
 		
@@ -56,7 +58,8 @@ public class CategoriaResource implements Serializable{
 	}
 	
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<Void> updateById(@RequestBody Categoria obj, @PathVariable Integer id){
+	public ResponseEntity<Void> updateById(@Valid @RequestBody CategoriaDTO objDTO, @PathVariable Integer id){
+		Categoria obj = categoriaService.fromDTO(objDTO);
 		obj.setId(id);
 		obj = categoriaService.update(obj);
 		

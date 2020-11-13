@@ -12,6 +12,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.franciscoaguiar.cursomc.domain.Categoria;
+import com.franciscoaguiar.cursomc.dto.CategoriaDTO;
 import com.franciscoaguiar.cursomc.repositories.CategoriaRepository;
 import com.franciscoaguiar.cursomc.services.exceptions.DataIntegrityException;
 import com.franciscoaguiar.cursomc.services.exceptions.ObjectNotFoundException;
@@ -65,6 +66,10 @@ public class CategoriaService implements Serializable{
 	public Page<Categoria> findPage(Integer page, Integer linesPage, String orderBy, String direction){
 		PageRequest pageRequest = PageRequest.of(page, linesPage, Direction.valueOf(direction), orderBy);
 		return categoriaRepository.findAll(pageRequest);
+	}
+	
+	public Categoria fromDTO(CategoriaDTO objDTO) {
+		return new Categoria(objDTO.getId(), objDTO.getNome());
 	}
 	
 }
