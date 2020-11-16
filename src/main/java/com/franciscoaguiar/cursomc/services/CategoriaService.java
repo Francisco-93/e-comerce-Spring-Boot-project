@@ -12,6 +12,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.franciscoaguiar.cursomc.domain.Categoria;
+import com.franciscoaguiar.cursomc.domain.Cliente;
 import com.franciscoaguiar.cursomc.dto.CategoriaDTO;
 import com.franciscoaguiar.cursomc.repositories.CategoriaRepository;
 import com.franciscoaguiar.cursomc.services.exceptions.DataIntegrityException;
@@ -49,10 +50,12 @@ public class CategoriaService implements Serializable{
 	}
 	
 	public Categoria update (Categoria obj) {
-		findById(obj.getId());
-		return categoriaRepository.save(obj);
+		Categoria newObj = findById(obj.getId());
+		updateData(newObj, obj);
+		return categoriaRepository.save(newObj);
 	}
 	
+
 	public void deleteById(Integer id) {
 		findById(id);
 		try {
@@ -62,7 +65,6 @@ public class CategoriaService implements Serializable{
 			throw new DataIntegrityException("Não é possível excluir uma categoria que possui produtos");
 		}
 	}
-	
 	public Page<Categoria> findPage(Integer page, Integer linesPage, String orderBy, String direction){
 		PageRequest pageRequest = PageRequest.of(page, linesPage, Direction.valueOf(direction), orderBy);
 		return categoriaRepository.findAll(pageRequest);
@@ -72,4 +74,7 @@ public class CategoriaService implements Serializable{
 		return new Categoria(objDTO.getId(), objDTO.getNome());
 	}
 	
+	private void updateData(Categoria newObj, Categoria obj) {
+		newObj.setNome(obj.getNome());
+	}
 }

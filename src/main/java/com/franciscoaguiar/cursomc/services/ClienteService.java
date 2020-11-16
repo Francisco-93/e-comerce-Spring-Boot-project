@@ -23,14 +23,14 @@ public class ClienteService implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Autowired
-	private ClienteRepository categoriaRepository;
+	private ClienteRepository clienteRepository;
 	
 	public List<Cliente> findAll(){
-		return categoriaRepository.findAll();
+		return clienteRepository.findAll();
 	}
 	
 	public Cliente findById(Integer id){
-		Optional<Cliente> obj = categoriaRepository.findById(id);
+		Optional<Cliente> obj = clienteRepository.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! Id: " + id + ", Tipo: " + Cliente.class.getName()));
 	}
 	
@@ -44,19 +44,19 @@ public class ClienteService implements Serializable{
 	
 	public Cliente insert (Cliente obj) {
 		obj.setId(null);
-		return categoriaRepository.save(obj);
+		return clienteRepository.save(obj);
 	}
 	
 	public Cliente update (Cliente obj) {
 		Cliente newObj = findById(obj.getId());
 		updateData(newObj, obj);
-		return categoriaRepository.save(newObj);
+		return clienteRepository.save(newObj);
 	}
 	
 	public void deleteById(Integer id) {
 		findById(id);
 		try {
-			categoriaRepository.deleteById(id);			
+			clienteRepository.deleteById(id);			
 		}
 		catch (DataIntegrityViolationException e) {
 			throw new DataIntegrityException("Não é possível excluir um cliente que possui pedidos");
@@ -65,7 +65,7 @@ public class ClienteService implements Serializable{
 	
 	public Page<Cliente> findPage(Integer page, Integer linesPage, String orderBy, String direction){
 		PageRequest pageRequest = PageRequest.of(page, linesPage, Direction.valueOf(direction), orderBy);
-		return categoriaRepository.findAll(pageRequest);
+		return clienteRepository.findAll(pageRequest);
 	}
 	
 	public Cliente fromDTO(ClienteDTO objDTO) {
