@@ -23,6 +23,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.franciscoaguiar.cursomc.domain.Cliente;
 import com.franciscoaguiar.cursomc.dto.ClienteDTO;
+import com.franciscoaguiar.cursomc.dto.ClienteNewDTO;
 import com.franciscoaguiar.cursomc.services.ClienteService;
 
 @RestController
@@ -48,7 +49,7 @@ public class ClienteResource implements Serializable{
 	}
 	
 	@PostMapping
-	public ResponseEntity<Void> insert(@Valid @RequestBody ClienteDTO objDTO){
+	public ResponseEntity<Void> insert(@Valid @RequestBody ClienteNewDTO objDTO){
 		Cliente obj = clienteService.fromDTO(objDTO);
 		obj = clienteService.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().
